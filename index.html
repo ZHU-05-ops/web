@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Silverhawk — 讓音樂，帶我們相遇。">
+  <meta name="theme-color" content="#000">
+  <title>Silverhawk — 讓音樂，帶我們相遇</title>
+  <style>
+    :root{
+      --black:#050505;--ink:#f5f5f7;--muted:#a1a1a6;--line:rgba(255,255,255,.12);
+      --light:#f5f5f7;--light-ink:#1d1d1f;--light-muted:#6e6e73;--blue:#2997ff;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:52px}
+    body{margin:0;background:var(--black);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC",Arial,sans-serif;letter-spacing:-.02em}
+    body.menu-open{overflow:hidden}
+    a{color:inherit;text-decoration:none}
+    img,video{display:block;max-width:100%}
+    button{font:inherit}
+
+    .nav{position:fixed;z-index:100;inset:0 0 auto;height:52px;background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav-inner{height:100%;max-width:1180px;margin:auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-size:13px;font-weight:650;letter-spacing:.11em;white-space:nowrap}.brand span{opacity:.45;margin-right:7px}
+    .links{display:flex;gap:30px;list-style:none;margin:0;padding:0;font-size:12px;color:#d1d1d6}.links a{transition:opacity .2s}.links a:hover{opacity:.55}
+    .nav-cta{font-size:12px;font-weight:600;background:#f5f5f7;color:#050505;border-radius:999px;padding:7px 13px}
+    .menu-toggle{display:none;border:0;background:transparent;color:#fff;font-size:22px;padding:8px}
+
+    .hero{min-height:100svh;position:relative;display:grid;place-items:center;overflow:hidden;background:#000}
+    .hero-media{position:absolute;inset:0}.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.8) contrast(1.05)}
+    .hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.16) 35%,rgba(0,0,0,.82) 100%)}
+    .hero-content{position:relative;z-index:2;text-align:center;padding:110px 24px 80px;max-width:900px}
+    .eyebrow{font-size:11px;letter-spacing:.18em;color:var(--muted);margin:0 0 20px;text-transform:uppercase}
+    .hero .eyebrow{color:#d1d1d6}
+    .hero h1{font-size:clamp(58px,9vw,126px);line-height:.9;letter-spacing:-.075em;margin:0;font-weight:650}
+    .hero .lead{font-size:clamp(17px,2vw,22px);line-height:1.45;color:#d1d1d6;max-width:620px;margin:30px auto}
+    .button{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:999px;background:#f5f5f7;color:#050505;font-size:14px;font-weight:600;transition:transform .2s,background .2s}.button:hover{transform:scale(1.03);background:#fff}
+    .hero-note{font-size:12px;color:#a1a1a6;margin-top:22px}.scroll{position:absolute;z-index:3;bottom:26px;left:50%;transform:translateX(-50%);font-size:11px;color:#b0b0b5;letter-spacing:.13em;white-space:nowrap}
+
+    .section{max-width:var(--max);margin:auto;padding:150px 24px}.section-heading{max-width:780px;margin-bottom:65px}.section-heading.center{text-align:center;margin-left:auto;margin-right:auto}
+    .section h2{font-size:clamp(44px,6vw,78px);line-height:.98;letter-spacing:-.06em;margin:0;font-weight:650}.section-sub{color:var(--light-muted);font-size:18px;line-height:1.6}
+    .story{background:#050505}.story-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:70px;align-items:center}
+    .media-card{border-radius:26px;overflow:hidden;background:#151518;box-shadow:0 30px 80px rgba(0,0,0,.3)}.media-card img{width:100%;aspect-ratio:16/10;object-fit:cover}.caption{padding:17px 20px;color:#8e8e93;font-size:12px}
+    .copy{font-size:19px;line-height:1.75;color:#c7c7cc}.copy p{margin:0 0 22px}.signature{color:#f5f5f7;font-size:14px;margin-top:28px}
+
+    .members{background:var(--light);color:var(--light-ink)}.members-inner{max-width:var(--max);margin:auto}.members .eyebrow,.members .section-sub{color:var(--light-muted)}
+    .member-visual{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;margin-bottom:55px}.member-visual .media-card{box-shadow:none;border-radius:24px}.member-visual img{height:100%;aspect-ratio:auto;min-height:360px;object-fit:cover}.member-visual .quote{border-radius:24px;background:#e8e8ed;display:flex;flex-direction:column;justify-content:flex-end;padding:35px}.quote-mark{font-size:52px;line-height:1;color:#86868b}.quote p{font-size:28px;line-height:1.18;letter-spacing:-.045em;margin:10px 0 0;font-weight:600}.quote small{display:block;color:#6e6e73;margin-top:20px;font-size:12px}
+    .member-list{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #d2d2d7}.member{padding:28px 18px 0 0;border-right:1px solid #d2d2d7;min-height:170px}.member:not(:first-child){padding-left:22px}.member:last-child{border-right:0}.number{font-size:11px;color:#86868b;letter-spacing:.12em}.member h3{font-size:25px;margin:14px 0 8px;letter-spacing:-.03em}.member h3 span{font-size:12px;font-weight:500;color:#86868b;margin-left:6px}.member p{color:#6e6e73;line-height:1.6;margin:0}
+
+    .tour{background:#0d0d0f;max-width:none}.tour-inner{max-width:var(--max);margin:auto}.tour-top{display:flex;justify-content:space-between;gap:30px;align-items:end}.countdown{color:#a1a1a6;text-align:right;font-size:13px}.countdown strong{display:block;color:#f5f5f7;font-size:22px;margin-top:6px}
+    .tour-list{margin-top:65px;border-top:1px solid var(--line)}.tour-stop{display:grid;grid-template-columns:150px 1fr 130px 30px;gap:20px;align-items:center;padding:27px 0;border-bottom:1px solid var(--line);transition:background .2s,padding .2s}.tour-stop:hover{padding-left:12px;padding-right:12px;background:rgba(255,255,255,.025)}.date{font-size:12px;color:#8e8e93;letter-spacing:.12em}.date b{font-size:38px;color:#f5f5f7;letter-spacing:-.05em;margin-right:8px}.tour-stop h3{font-size:22px;margin:0 0 5px}.tour-stop p{margin:0;color:#8e8e93;font-size:13px}.time{text-align:right;color:#c7c7cc!important}.arrow{color:#f5f5f7;font-size:20px;text-align:right}.tour-note{color:#6e6e73;font-size:12px;margin-top:22px}
+
+    .track{max-width:none;background:var(--light);color:var(--light-ink)}.track-inner{max-width:var(--max);margin:auto}.track .eyebrow{color:#6e6e73}.track-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}.track h2{font-size:clamp(42px,5vw,72px)}.track-copy{font-size:18px;color:#6e6e73;line-height:1.65}.meta{font-size:11px;letter-spacing:.14em;color:#86868b}
+    .player{background:#101013;border-radius:25px;padding:14px;box-shadow:0 35px 80px rgba(0,0,0,.22)}.player video{width:100%;border-radius:17px;aspect-ratio:16/9;object-fit:cover;background:#000}.player-hint{font-size:12px;color:#6e6e73;margin:16px 0 0}
+    .audio-box{margin-top:18px;background:#fff;border:1px solid #d2d2d7;border-radius:18px;padding:17px}.audio-head{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:10px}.audio-title{font-weight:600;font-size:14px}.audio-time{font-variant-numeric:tabular-nums;font-size:12px;color:#86868b}.audio-box audio{width:100%;height:38px}.audio-note{font-size:11px;color:#86868b;margin:9px 0 0}
+
+    .footer{padding:55px 24px 35px;text-align:center;border-top:1px solid #242428;background:#000}.footer .brand{display:inline-block;margin-bottom:14px}.footer p{color:#8e8e93;margin:0 0 8px}.footer small{color:#515154;font-size:11px}
+
+    @media(max-width:800px){
+      .links,.nav-cta{display:none}.menu-toggle{display:block}.nav-inner{padding:0 18px}
+      .mobile-links{position:fixed;top:52px;left:0;right:0;background:rgba(0,0,0,.94);backdrop-filter:blur(20px);padding:16px 20px 24px;display:none}.mobile-links.open{display:block}.mobile-links a{display:block;padding:15px 4px;border-bottom:1px solid rgba(255,255,255,.1);font-size:16px}
+      .section{padding:100px 20px}.story-grid,.track-layout,.member-visual{grid-template-columns:1fr;gap:35px}.tour-top{display:block}.countdown{text-align:left;margin-top:25px}.tour-stop{grid-template-columns:90px 1fr 25px}.time{display:none}.members .section-heading{margin-bottom:45px}.member-list{grid-template-columns:1fr 1fr}.member{border-bottom:1px solid #d2d2d7}.member-visual img{min-height:260px}.quote{min-height:260px}.hero h1{font-size:18vw}
+    }
+    @media(max-width:480px){.member-list{grid-template-columns:1fr}.member{border-right:0;padding-left:0!important}.member:last-child{border-bottom:0}.hero-content{padding-top:120px}.section h2{font-size:46px}.date b{font-size:28px;display:block;margin:0}.tour-stop{padding:22px 0}}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <nav class="nav-inner" aria-label="主導覽">
+      <a class="brand" href="#首頁"><span>S</span>SILVERHAWK</a>
+      <ul class="links">
+        <li><a href="#故事">樂團故事</a></li><li><a href="#團員">團員介紹</a></li><li><a href="#巡演">巡演場次</a></li><li><a href="#新曲">新曲試聽</a></li>
+      </ul>
+      <a class="nav-cta" href="#巡演">2026 巡演</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false">☰</button>
+    </nav>
+    <div class="mobile-links" id="mobileLinks">
+      <a href="#故事">樂團故事</a><a href="#團員">團員介紹</a><a href="#巡演">巡演場次</a><a href="#新曲">新曲試聽</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="首頁">
+      <div class="hero-media"><img src="assets/hero.webp" alt="Silverhawk 樂團現場演出" fetchpriority="high" width="1536" height="1024"></div>
+      <div class="hero-content">
+        <p class="eyebrow">SILVERHAWK · 2026 LIVE TOUR</p>
+        <h1>讓音樂，<br>帶我們相遇。</h1>
+        <p class="lead">一段旋律、一場現場，還有每個一起唱到最後的人。</p>
+        <a class="button" href="#新曲">聽聽我們的新歌 <span>↓</span></a>
+        <p class="hero-note">新單曲《A Beautiful Theft》 · 台灣巡演 11 月啟程</p>
+      </div>
+      <a class="scroll" href="#故事">向下探索 ↓</a>
+    </section>
+
+    <section class="section story" id="故事">
+      <div class="section-heading"><p class="eyebrow">A BAND, A THOUSAND STORIES</p><h2>從一間練團室，<br>唱進每一個夜晚。</h2></div>
+      <div class="story-grid">
+        <figure class="media-card"><img src="assets/story.webp" alt="Silverhawk 戶外演出剪影" loading="lazy" width="500" height="506"><figcaption class="caption">那些最初的聲音，至今仍在路上。</figcaption></figure>
+        <div class="copy">
+          <p>Silverhawk 從朋友間的一次即興合奏開始。四個人帶著各自的節奏，在失真吉他與真誠歌聲裡，慢慢找到共同的方向。</p>
+          <p>我們把旅途、遺憾與微小的希望寫進歌裡。每一次登台，都是把這些故事交到你手上。</p>
+          <p class="signature">四個人，一個聲音。 ✳</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section members" id="團員">
+      <div class="members-inner">
+        <div class="section-heading center"><p class="eyebrow">MEET THE BAND</p><h2>四種聲音，<br>同一個方向。</h2><p class="section-sub">台上是樂團，台下是一起走了很久的朋友。</p></div>
+        <div class="member-visual">
+          <figure class="media-card"><img src="assets/closeup.webp" alt="Silverhawk 現場主唱特寫" loading="lazy" width="1536" height="1024"></figure>
+          <div class="quote"><span class="quote-mark">“</span><p>我們不是在尋找完美的聲音，只想把當下唱得真一點。</p><small>SILVERHAWK / ON STAGE</small></div>
+        </div>
+        <div class="member-list">
+          <article class="member"><span class="number">01 / VOICE</span><h3>阿哲 <span>主唱</span></h3><p>把沒說出口的心事，唱成每個人的合唱。</p></article>
+          <article class="member"><span class="number">02 / GUITAR</span><h3>小宇 <span>吉他</span></h3><p>用一道道音牆，描出歌曲裡的遠方。</p></article>
+          <article class="member"><span class="number">03 / BASS</span><h3>安妮 <span>貝斯</span></h3><p>穩穩守住節奏，也讓低音開始呼吸。</p></article>
+          <article class="member"><span class="number">04 / DRUMS</span><h3>阿凱 <span>鼓手</span></h3><p>每一次落下的鼓點，都是下一段旅程的起點。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tour" id="巡演">
+      <div class="tour-inner">
+        <div class="tour-top">
+          <div class="section-heading"><p class="eyebrow">SEE YOU OUT THERE</p><h2>下一站，<br>和你一起大聲唱。</h2></div>
+          <div class="countdown">台北首場倒數<strong id="countdown">載入中…</strong></div>
+        </div>
+        <div class="tour-list">
+          <article class="tour-stop"><time class="date" datetime="2026-11-07"><b>07</b> NOV 2026</time><div><h3>台北</h3><p>台北流行音樂中心 · 表演廳</p></div><p class="time">19:30 開演</p><span class="arrow">↗</span></article>
+          <article class="tour-stop"><time class="date" datetime="2026-11-14"><b>14</b> NOV 2026</time><div><h3>台中</h3><p>Legacy Taichung</p></div><p class="time">19:30 開演</p><span class="arrow">↗</span></article>
+          <article class="tour-stop"><time class="date" datetime="2026-11-21"><b>21</b> NOV 2026</time><div><h3>高雄</h3><p>高雄流行音樂中心 · LIVE WAREHOUSE</p></div><p class="time">19:30 開演</p><span class="arrow">↗</span></article>
+          <article class="tour-stop"><time class="date" datetime="2026-11-28"><b>28</b> NOV 2026</time><div><h3>台南</h3><p>台南文化中心 · 原生劇場</p></div><p class="time">19:30 開演</p><span class="arrow">↗</span></article>
+        </div>
+        <p class="tour-note">場次資訊以主辦單位公告為準，期待現場見。</p>
+      </div>
+    </section>
+
+    <section class="section track" id="新曲">
+      <div class="track-inner">
+        <div class="track-layout">
+          <div>
+            <p class="eyebrow">A FIRST LISTEN · NEW SINGLE</p>
+            <h2>《A Beautiful Theft》</h2>
+            <p class="track-copy">有些相遇，悄悄偷走了平凡的一天。先用耳機聽一段，再看看我們留在現場的影像。</p>
+            <p class="meta">SILVERHAWK · 2026</p>
+            <div class="audio-box">
+              <div class="audio-head"><span class="audio-title">新曲試聽 · 02:30</span><span class="audio-time" id="audioTime">00:00 / 02:30</span></div>
+              <audio id="audioPlayer" controls preload="metadata"><source src="assets/silverhawk-new-single.mp3" type="audio/mpeg">您的瀏覽器不支援音訊播放。</audio>
+              <p class="audio-note">可直接播放、暫停、調整音量與播放進度。</p>
+            </div>
+          </div>
+          <div>
+            <div class="player"><video controls preload="metadata" playsinline poster="assets/closeup.webp" aria-label="Silverhawk 新曲現場影像"><source src="video/silverhawk-live.mp4" type="video/mp4">您的瀏覽器不支援影片播放。</video></div>
+            <p class="player-hint">▶ 現場影像：建議開啟聲音，感受完整的燈光與演出氛圍。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><a class="brand" href="#首頁"><span>S</span>SILVERHAWK</a><p>讓音樂，帶我們相遇。</p><small>© 2026 Silverhawk. Made for the nights we share.</small></footer>
+
+  <script>
+    const target=new Date('2026-11-07T19:30:00+08:00');
+    function tick(){const el=document.getElementById('countdown');const d=target-Date.now();if(d<=0){el.textContent='今晚見，現場見。';return}const days=Math.floor(d/86400000),h=Math.floor(d%86400000/3600000),m=Math.floor(d%3600000/60000);el.textContent=`還有 ${days} 天 ${h} 小時 ${m} 分`}
+    tick();setInterval(tick,60000);
+
+    const menuToggle=document.getElementById('menuToggle');
+    const mobileLinks=document.getElementById('mobileLinks');
+    menuToggle.addEventListener('click',()=>{const open=mobileLinks.classList.toggle('open');menuToggle.setAttribute('aria-expanded',open);document.body.classList.toggle('menu-open',open)});
+    mobileLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mobileLinks.classList.remove('open');menuToggle.setAttribute('aria-expanded','false');document.body.classList.remove('menu-open')}));
+
+    const audio=document.getElementById('audioPlayer');const audioTime=document.getElementById('audioTime');
+    const fmt=s=>{if(!Number.isFinite(s))return '00:00';const m=Math.floor(s/60),sec=Math.floor(s%60).toString().padStart(2,'0');return `${m.toString().padStart(2,'0')}:${sec}`};
+    audio.addEventListener('loadedmetadata',()=>audioTime.textContent=`00:00 / ${fmt(audio.duration)}`);
+    audio.addEventListener('timeupdate',()=>audioTime.textContent=`${fmt(audio.currentTime)} / ${fmt(audio.duration)}`);
+  </script>
+</body>
+</html>
